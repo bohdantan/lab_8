@@ -1,3 +1,7 @@
+package ski_system;
+
+import ski_pass.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,9 +49,9 @@ public class SkiPassSystem {
                 default:
                     throw new IllegalArgumentException();
             }
-            sp = new DaysSkiPass(type, c);
+            sp = new DaysSkiPass(list.size(), type, c);
         } else {
-            sp = new LiftsSkiPass(type);
+            sp = new LiftsSkiPass(list.size(), type);
         }
         list.add(sp);
         return sp;
@@ -58,7 +62,7 @@ public class SkiPassSystem {
     }
 
     public static void block(int id) {
-        list.get(id).valid = false;
+        list.get(id).block();
     }
 
     public static void addStats(int id, SkiPassType type, Calendar c, boolean permission) {

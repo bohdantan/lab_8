@@ -1,3 +1,5 @@
+package ski_pass;
+
 /**
  * This enum enumerates types of ski passes.
  */

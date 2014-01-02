@@ -1,3 +1,7 @@
+package ski_system;
+
+import ski_pass.SkiPassType;
+
 import java.util.Calendar;
 
 /**

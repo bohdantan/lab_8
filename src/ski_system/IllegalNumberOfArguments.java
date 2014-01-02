@@ -1,9 +1,7 @@
+package ski_system;
+
 /**
- * Created with IntelliJ IDEA.
- * User: user
- * Date: 18.12.13
- * Time: 16:58
- * To change this template use File | Settings | File Templates.
+ * This runtime exception is unchecked. It indicates about wrong number of arguments.
  */
 public class IllegalNumberOfArguments extends RuntimeException {
     public IllegalNumberOfArguments() {

@@ -1,3 +1,5 @@
+package ski_pass;
+
 import java.util.Calendar;
 
 /**
@@ -8,7 +10,8 @@ public class DaysSkiPass extends SkiPass {
     private Calendar beginDate;
     private Calendar endDate;
 
-    public DaysSkiPass(SkiPassType type, Calendar c) {
+    public DaysSkiPass(int id, SkiPassType type, Calendar c) {
+        this.id = id;
         this.type = type;
         beginDate = (Calendar) c.clone();
         endDate = (Calendar) c.clone();
