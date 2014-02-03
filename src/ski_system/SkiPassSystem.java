@@ -1,5 +1,9 @@
 package ski_system;
 
+import parameters.DaysParameters;
+import parameters.HalfDayParameters;
+import parameters.Parameters;
+import parameters.SeasonParameters;
 import ski_pass.*;
 
 import java.text.SimpleDateFormat;
@@ -19,7 +23,7 @@ public class SkiPassSystem {
 
     private SkiPassSystem() {}
 
-    public static SkiPass create(SkiPassType type, int ... args) {
+    /*public static SkiPass create(SkiPassType type, int ... args) {
         SkiPass sp;
         if (type.getDaysOrLifts() == DaysOrLifts.DAYS) {
             Calendar c;
@@ -27,7 +31,7 @@ public class SkiPassSystem {
                 case WORKING_HALF_DAY:
                 case WEEKEND_HALF_DAY:
                     if (args.length != 4)
-                        throw new IllegalNumberOfArguments();
+                        throw new IllegalArgumentType();
                     if (args[3] != 9 && args[3] != 13)
                         throw new IllegalArgumentException();
                     c = new GregorianCalendar(args[0], args[1], args[2], args[3], 0);
@@ -38,12 +42,12 @@ public class SkiPassSystem {
                 case WEEKEND_2_DAYS:
                 case WORKING_5_DAYS:
                     if (args.length != 3)
-                        throw new IllegalNumberOfArguments();
+                        throw new IllegalArgumentType();
                     c = new GregorianCalendar(args[0], args[1], args[2]);
                     break;
                 case SEASON:
                     if (args.length != 1)
-                        throw new IllegalNumberOfArguments();
+                        throw new IllegalArgumentType();
                     c = new GregorianCalendar(args[0], 10, 1);
                     break;
                 default:
@@ -52,6 +56,58 @@ public class SkiPassSystem {
             sp = new DaysSkiPass(list.size(), type, c);
         } else {
             sp = new LiftsSkiPass(list.size(), type);
+        }
+        list.add(sp);
+        return sp;
+    }*/
+
+    public static SkiPass create(Parameters params) {
+        SkiPass sp;
+        if (params.getType().getDaysOrLifts() == DaysOrLifts.LIFTS) {
+            sp = new LiftsSkiPass(list.size(), params.getType());
+        } else {
+            throw new IllegalArgumentType();
+        }
+        list.add(sp);
+        return sp;
+    }
+
+    public static SkiPass create(SeasonParameters params) {
+        SkiPass sp;
+        if (params.getType() == SkiPassType.SEASON) {
+            Calendar c = new GregorianCalendar(params.getYear(), 10, 1);
+            sp = new DaysSkiPass(list.size(), params.getType(), c);
+        } else {
+            throw new IllegalArgumentType();
+        }
+        list.add(sp);
+        return sp;
+    }
+
+    public static SkiPass create(DaysParameters params) {
+        SkiPass sp;
+        if (params.getType() == SkiPassType.WORKING_1_DAY ||
+            params.getType() == SkiPassType.WEEKEND_1_DAY ||
+            params.getType() == SkiPassType.WORKING_2_DAYS ||
+            params.getType() == SkiPassType.WEEKEND_2_DAYS ||
+            params.getType() == SkiPassType.WORKING_5_DAYS) {
+            Calendar c = new GregorianCalendar(params.getYear(), params.getMonth(), params.getDay());
+            sp = new DaysSkiPass(list.size(), params.getType(), c);
+        } else {
+            throw new IllegalArgumentType();
+        }
+        list.add(sp);
+        return sp;
+    }
+
+    public static SkiPass create(HalfDayParameters params) {
+        SkiPass sp;
+        if (params.getType() == SkiPassType.WORKING_HALF_DAY ||
+            params.getType() == SkiPassType.WEEKEND_HALF_DAY) {
+            Calendar c = new GregorianCalendar(params.getYear(), params.getMonth(), params.getDay(), params.getHour(), 0);
+            sp = new DaysSkiPass(list.size(), params.getType(), c);
+        } else {
+            throw new IllegalArgumentType();
         }
         list.add(sp);
         return sp;
